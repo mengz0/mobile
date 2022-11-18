@@ -247,6 +247,7 @@ int32_t go_seq_unwrap(jint refnum) {
 }
 
 jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmethodID proxy_cons) {
+	LOG_WARNING("proxy_service: go_seq_from_refnum()");
 	if (refnum == NULL_REFNUM) {
 		return NULL;
 	}
@@ -257,6 +258,7 @@ jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmet
 	// Seq.Ref ref = Seq.getRef(refnum)
 	jobject ref = (*env)->CallStaticObjectMethod(env, seq_class, seq_getRef, (jint)refnum);
 	if (ref == NULL) {
+		LOG_WARNING("proxy_service: Unknown reference");
 		LOG_FATAL("Unknown reference: %d", refnum);
 	}
 	// Go incremented the reference count just before passing the refnum. Decrement it here.
