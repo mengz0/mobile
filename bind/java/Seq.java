@@ -172,7 +172,6 @@ public class Seq {
 		// inc increments the reference count of a Java object when it
 		// is sent to Go. inc returns the refnum for the object.
 		synchronized int inc(Object o) {
-			System.out.println("proxy_service: gomobile::inc() called");
 			if (o == null) {
 				return NULL_REFNUM;
 			}
@@ -185,15 +184,15 @@ public class Seq {
 					throw new RuntimeException("createRef overflow for " + o);
 				}
 				refnumObj = next++;
-				// javaRefs.put(o, refnumObj);
+				javaRefs.put(o, refnumObj);
 			}
 			int refnum = refnumObj;
-			// Ref ref = javaObjs.get(refnum);
-			// if (ref == null) {
-			// 	ref = new Ref(refnum, o);
-			// 	javaObjs.put(refnum, ref);
-			// }
-			// ref.inc();
+			Ref ref = javaObjs.get(refnum);
+			if (ref == null) {
+				ref = new Ref(refnum, o);
+				javaObjs.put(refnum, ref);
+			}
+			ref.inc();
 			return refnum;
 		}
 
