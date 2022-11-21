@@ -88,6 +88,7 @@ public class Seq {
 	}
 
 	public static Ref getRef(int refnum) {
+		throw new RuntimeException("proxy_service: testing exception handling");
 		return tracker.get(refnum);
 	}
 
