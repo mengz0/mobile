@@ -256,11 +256,8 @@ jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmet
 	}
 	// Seq.Ref ref = Seq.getRef(refnum)
 	jobject ref = (*env)->CallStaticObjectMethod(env, seq_class, seq_getRef, (jint)refnum);
-	jthrowable throwable = (*env)->ExceptionCheck();
-	if (throwable != NULL) {
-		(*env)->ExceptionDescribe();
-		(*env)->Throw(throwable);
-	}
+	jobject exception = go_seq_get_exception(env);
+	go_seq_maybe_throw_exception(env, exception);
 	if (ref == NULL) {
 		LOG_FATAL("Unknown reference: %d", refnum);
 	}
