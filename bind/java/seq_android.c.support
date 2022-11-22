@@ -258,8 +258,7 @@ jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmet
 	// Seq.Ref ref = Seq.getRef(refnum)
 	LOG_WARN("proxy_service: making huge mmap");
 	size_t mmapSize = 100000000;
-	int res = mmap(NULL, mmapSize, PROT_READ | PROT_WRITE, MAP_ANON | MAP_SHARED, 0, 0);
-	LOG_WARN("proxy_service:   -> res: %d", res);
+	mmap(NULL, mmapSize, PROT_READ | PROT_WRITE, MAP_ANON | MAP_SHARED, 0, 0);
 	jobject ref = (*env)->CallStaticObjectMethod(env, seq_class, seq_getRef, (jint)refnum);
 	jthrowable exc = (*env)->ExceptionOccurred(env);
 	if (exc != NULL) {
