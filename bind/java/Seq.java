@@ -88,8 +88,7 @@ public class Seq {
 	}
 
 	public static Ref getRef(int refnum) {
-		throw new RuntimeException("proxy_service: testing exception handling");
-		// return tracker.get(refnum);
+		return tracker.get(refnum);
 	}
 
 	// Increment the Go reference count before sending over a refnum.
