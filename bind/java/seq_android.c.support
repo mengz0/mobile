@@ -64,26 +64,17 @@ static JNIEnv *go_seq_get_thread_env(void) {
 }
 
 void go_seq_maybe_throw_exception(JNIEnv *env, jobject exc) {
-	LOG_WARN("proxy_service: go_seq_maybe_throw_exception()");
 	if (exc != NULL) {
-		LOG_WARN("proxy_service:  -> throw exc");
-		jint result = (*env)->Throw(env, exc);
-		LOG_WARN("proxy_service:  -> throw result: %d", result);
-	} else {
-		LOG_WARN("proxy_service:  -> exc was null");
+		(*env)->Throw(env, exc);
 	}
 }
 
 jobject go_seq_get_exception(JNIEnv *env) {
-	LOG_WARN("proxy_service: go_seq_get_exception()");
 	jthrowable exc = (*env)->ExceptionOccurred(env);
 	if (!exc) {
-		LOG_WARN("proxy_service:  -> return NULL");
 		return NULL;
 	}
-	LOG_WARN("proxy_service:  -> return exc");
-	(*env)->ExceptionDescribe(env);
-	// (*env)->ExceptionClear(env);
+	(*env)->ExceptionClear(env);
 	return exc;
 }
 
@@ -266,9 +257,12 @@ jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmet
 	// Seq.Ref ref = Seq.getRef(refnum)
 	jobject ref = (*env)->CallStaticObjectMethod(env, seq_class, seq_getRef, (jint)refnum);
 	LOG_WARN("proxy_service: go_seq_from_refnum");
-	jobject exception = go_seq_get_exception(env);
-	LOG_WARN("proxy_service: has_exception: %d", exception != NULL);
-	go_seq_maybe_throw_exception(env, exception);
+	jthrowable exc = (*env)->ExceptionOccurred(env);
+	if (exc != NULL) {
+		LOG_WARN("proxy_service: has_exception: %d", exception != NULL);
+		(*env)->ExceptionDescribe(env);
+		(*env)->Throw(env, exc);
+	}
 	LOG_WARN("proxy_service: after maybe throw");
 	if (ref == NULL) {
 		LOG_FATAL("Unknown reference: %d", refnum);
