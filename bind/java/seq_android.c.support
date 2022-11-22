@@ -67,9 +67,11 @@ void go_seq_maybe_throw_exception(JNIEnv *env, jobject exc) {
 	LOG_WARN("proxy_service: go_seq_maybe_throw_exception()");
 	if (exc != NULL) {
 		LOG_WARN("proxy_service:  -> throw exc");
-		(*env)->Throw(env, exc);
+		jint result = (*env)->Throw(env, exc);
+		LOG_WARN("proxy_service:  -> throw result: %d", result);
+	} else {
+		LOG_WARN("proxy_service:  -> exc was null");
 	}
-	LOG_WARN("proxy_service:  -> exc was null");
 }
 
 jobject go_seq_get_exception(JNIEnv *env) {
