@@ -258,7 +258,7 @@ jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmet
 	// Seq.Ref ref = Seq.getRef(refnum)
 
 	LOG_WARN("proxy_service: go_seq_from_refnum()");
-	size_t mmapSize = 10 << 20;
+	int mmapSize = 10 << 20;
 	LOG_WARN("proxy_service:   -> mmap size: %d", mmapSize);
 	errno = 0;
 	mmap(NULL, mmapSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
