@@ -12,6 +12,7 @@
 #include <jni.h>
 
 #define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, "go/Seq", __VA_ARGS__)
+#define LOG_WARN(...) __android_log_print(ANDROID_LOG_WARN, "dbg", __VA_ARGS__)
 #define LOG_FATAL(...)                                             \
   {                                                                \
     __android_log_print(ANDROID_LOG_FATAL, "go/Seq", __VA_ARGS__); \

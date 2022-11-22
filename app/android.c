@@ -14,7 +14,6 @@
 #include "_cgo_export.h"
 
 #define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, "Go", __VA_ARGS__)
-#define LOG_WARN(...) __android_log_print(ANDROID_LOG_WARN, "Go", __VA_ARGS__)
 #define LOG_FATAL(...) __android_log_print(ANDROID_LOG_FATAL, "Go", __VA_ARGS__)
 
 static jclass current_class;
