@@ -259,7 +259,7 @@ jobject go_seq_from_refnum(JNIEnv *env, int32_t refnum, jclass proxy_class, jmet
 	LOG_WARN("proxy_service: go_seq_from_refnum");
 	jthrowable exc = (*env)->ExceptionOccurred(env);
 	if (exc != NULL) {
-		LOG_WARN("proxy_service: has_exception: %d", exception != NULL);
+		LOG_WARN("proxy_service: has_exception: %d", exc != NULL);
 		(*env)->ExceptionDescribe(env);
 		(*env)->Throw(env, exc);
 	}
