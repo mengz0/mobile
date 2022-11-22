@@ -81,8 +81,9 @@ jobject go_seq_get_exception(JNIEnv *env) {
 		LOG_WARN("proxy_service:  -> return NULL");
 		return NULL;
 	}
-	LOG_WARN("proxy_service:  -> clear exc and return");
-	(*env)->ExceptionClear(env);
+	LOG_WARN("proxy_service:  -> return exc");
+	(*env)->ExceptionDescribe(env);
+	// (*env)->ExceptionClear(env);
 	return exc;
 }
 
